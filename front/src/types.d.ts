@@ -38,11 +38,11 @@ export interface RegisterResponse {
 
 export interface ValidationError {
   errors: {
-    [key: string]:{
+    [key: string]: {
       name: string;
       message: string;
-    }
-  },
+    };
+  };
   message: string;
   name: string;
   _message: string;

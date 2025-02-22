@@ -1,7 +1,7 @@
-import { News } from '../../types';
-import { RootState } from '../../app/store';
-import { createSlice } from '@reduxjs/toolkit';
-import { createNews, fetchNews, fetchUserNews } from './newsThunks';
+import { News } from "../../types";
+import { RootState } from "../../app/store";
+import { createSlice } from "@reduxjs/toolkit";
+import { createNews, fetchNews, fetchUserNews } from "./newsThunks";
 
 interface ICocktail {
   news: News[];
@@ -17,15 +17,17 @@ const initialState: ICocktail = {
   userNews: [],
   fetchLoading: false,
   createLoading: false,
-}
+};
 
 export const selectNews = (state: RootState) => state.news.news;
 export const selectUserNews = (state: RootState) => state.news.userNews;
-export const selectNewsFetchLoading = (state: RootState) => state.news.fetchLoading;
-export const selectNewsCreateLoading = (state: RootState) => state.news.createLoading;
+export const selectNewsFetchLoading = (state: RootState) =>
+  state.news.fetchLoading;
+export const selectNewsCreateLoading = (state: RootState) =>
+  state.news.createLoading;
 
 export const createNewsSlice = createSlice({
-  name: 'news',
+  name: "news",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -61,7 +63,7 @@ export const createNewsSlice = createSlice({
       .addCase(fetchUserNews.rejected, (state) => {
         state.fetchLoading = false;
       });
-  }
-})
+  },
+});
 
 export const createNewsReducer = createNewsSlice.reducer;

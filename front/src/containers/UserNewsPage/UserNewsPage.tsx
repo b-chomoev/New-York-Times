@@ -1,12 +1,23 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectNewsFetchLoading, selectUserNews } from '../../features/news/newsSlice';
-import { useEffect } from 'react';
-import { deleteNews, fetchUserNews } from '../../features/news/newsThunks';
-import { Button, Card, CardContent, CardMedia, CircularProgress, Container, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid2';
-import { apiUrl } from '../../globalConstants';
-import { toast } from 'react-toastify';
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  selectNewsFetchLoading,
+  selectUserNews,
+} from "../../features/news/newsSlice";
+import { useEffect } from "react";
+import { deleteNews, fetchUserNews } from "../../features/news/newsThunks";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import { apiUrl } from "../../globalConstants";
+import { toast } from "react-toastify";
 
 const UserNewsPage = () => {
   const { id } = useParams();
@@ -15,7 +26,6 @@ const UserNewsPage = () => {
   const name = userNews[0]?.user?.username;
   const navigate = useNavigate();
   const loading = useAppSelector(selectNewsFetchLoading);
-
 
   useEffect(() => {
     if (id) {
@@ -26,17 +36,19 @@ const UserNewsPage = () => {
   const onDelete = (id: string) => {
     try {
       dispatch(deleteNews(id));
-      navigate('/')
-      toast.success('News deleted');
+      navigate("/");
+      toast.success("News deleted");
     } catch (error) {
-      toast.error('Error deleting news');
+      toast.error("Error deleting news");
     }
   };
 
   return (
     <>
       <Container>
-        <Typography variant="h4" gutterBottom>{name}'s Portal</Typography>
+        <Typography variant="h4" gutterBottom>
+          {name}'s Portal
+        </Typography>
         {loading ? (
           <Grid container justifyContent="center" sx={{ mt: 4 }}>
             <CircularProgress />
@@ -44,7 +56,7 @@ const UserNewsPage = () => {
         ) : (
           <Grid container spacing={3}>
             {userNews.map((newsItem) => (
-              <Grid key={newsItem._id} >
+              <Grid key={newsItem._id}>
                 <Card>
                   <CardMedia
                     component="img"

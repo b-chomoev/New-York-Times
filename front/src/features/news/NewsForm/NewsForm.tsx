@@ -1,38 +1,40 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import Grid from '@mui/material/Grid2';
-import { Button, TextField, Typography, Container } from '@mui/material';
-import FileInput from '../../../components/FileInput/FileInput';
-import { useAppDispatch } from '../../../app/hooks';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { NewsMutation } from '../../../types';
-import { createNews } from '../newsThunks';
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import Grid from "@mui/material/Grid2";
+import { Button, TextField, Typography, Container } from "@mui/material";
+import FileInput from "../../../components/FileInput/FileInput";
+import { useAppDispatch } from "../../../app/hooks";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { NewsMutation } from "../../../types";
+import { createNews } from "../newsThunks";
 
 const initialState = {
-  title: '',
-  description: '',
+  title: "",
+  description: "",
   image: null,
 };
 
 const NewsForm = () => {
   const [form, setForm] = useState<NewsMutation>(initialState);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      dispatch(createNews({ ...form}));
+      dispatch(createNews({ ...form }));
       setForm(initialState);
-      navigate('/');
-      toast.success('News created successfully');
+      navigate("/");
+      toast.success("News created successfully");
     } catch (error) {
-      toast.error('Error creating news');
+      toast.error("Error creating news");
     }
   };
 
-  const inputChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const inputChangeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -83,7 +85,11 @@ const NewsForm = () => {
 
           <Grid size={{ xs: 12 }}>
             <Typography variant="h6">Image</Typography>
-            <FileInput name="image" label="Image" onGetFile={fileEventChangeHandler} />
+            <FileInput
+              name="image"
+              label="Image"
+              onGetFile={fileEventChangeHandler}
+            />
           </Grid>
 
           <Grid container justifyContent="center">
