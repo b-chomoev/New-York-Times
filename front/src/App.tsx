@@ -2,7 +2,7 @@ import { Container, CssBaseline } from "@mui/material";
 import AppToolbar from './components/UI/AppToolbar/AppToolbar';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './features/users/LoginPage';
-import RegisterPage from './features/users/LoginPage';
+import RegisterPage from './features/users/RegisterPage';
 
 const App = () => {
 

@@ -9,3 +9,10 @@ export interface UserFields {
     facebookID: string;
     __confirmPassword: string;
 }
+
+export interface NewsMutation {
+    email: string;
+    title: string;
+    description: string;
+    image: string | null;
+}

@@ -16,7 +16,6 @@ userRouter.post("/google", async (req, res, next) => {
             audience: config.google.clientId,
         });
 
-
         const payload = ticket.getPayload();
 
         if (!payload) {
@@ -126,7 +125,6 @@ userRouter.delete('/sessions', auth, async (req, res, next) => {
     }
 });
 
-
 userRouter.post('/secret', auth, async (req, res) => {
     let expressReq = req as RequestWithUser;
 
@@ -136,6 +134,5 @@ userRouter.post('/secret', auth, async (req, res) => {
 
     res.send({message: 'Secret material from Attractor', user: user});
 });
-
 
 export default userRouter;
