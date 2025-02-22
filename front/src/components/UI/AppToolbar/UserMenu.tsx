@@ -1,8 +1,8 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import { User } from '../../../types';
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectUser, unsetUser } from '../../../features/users/usersSlice';
+import { useAppDispatch } from '../../../app/hooks';
+import { unsetUser } from '../../../features/users/usersSlice';
 import { logout } from '../../../features/users/usersThunks';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,6 @@ interface Props {
 const UserMenu: React.FC<Props> = ({user}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userAdmin = useAppSelector(selectUser);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,13 +34,6 @@ const UserMenu: React.FC<Props> = ({user}) => {
         Hello, {user.username}
       </Button>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        {userAdmin && userAdmin.role === 'admin' && <MenuItem onClick={() => {
-          navigate('/admin');
-          setAnchorEl(null);
-        }}
-        >
-          Admin
-        </MenuItem>}
         <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
         <MenuItem onClick={() => navigate('/new-news')}>Add News</MenuItem>
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>

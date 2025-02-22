@@ -69,17 +69,27 @@ newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res, next) 
 });
 
 
-newsRouter.delete("/:id", auth, permit('admin'), async (req, res, next) => {
+newsRouter.delete("/:id", auth, permit('admin', 'user'), async (req, res, next) => {
+    const user = req as RequestWithUser;
+
     try {
         const {id} = req.params;
-
-        const news = await News.findByIdAndDelete(id);
+        const news = await News.findById(id);
 
         if (!news) {
             res.status(404).send({message: "News are not found"});
             return;
         }
 
+        const isAdmin = user.user.role === 'admin';
+        const isAuthor = news.user.toString() === user.user._id.toString();
+
+        if (!isAdmin && !isAuthor) {
+            res.status(403).send({message: "Forbidden"});
+            return;
+        }
+
+        await News.findByIdAndDelete(id);
         res.send({message: "News deleted successfully"});
     } catch (error) {
         next(error);

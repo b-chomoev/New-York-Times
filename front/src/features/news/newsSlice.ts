@@ -1,4 +1,4 @@
-import { News } from "../../types";
+import { News } from '../../types';
 import { RootState } from '../../app/store';
 import { createSlice } from '@reduxjs/toolkit';
 import { createNews, fetchNews, fetchUserNews } from './newsThunks';

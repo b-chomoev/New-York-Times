@@ -36,3 +36,10 @@ export const fetchUserNews = createAsyncThunk<News[], string>(
     return response.data;
   }
 );
+
+export const deleteNews = createAsyncThunk<void, string>(
+  'news/deleteNews',
+  async (newsId) => {
+    await axiosApi.delete(`/news/${newsId}`);
+  }
+);
