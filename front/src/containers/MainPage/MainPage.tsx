@@ -8,6 +8,7 @@ import { apiUrl } from '../../globalConstants';
 import { selectNews } from '../../features/news/newsSlice';
 import { fetchNews } from '../../features/news/newsThunks';
 import { News } from '../../types';
+import { Link } from 'react-router-dom';
 
 const MainPage = () => {
   const news = useAppSelector(selectNews);
@@ -42,7 +43,7 @@ const MainPage = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  src={`${apiUrl}/${event.image}`} // Путь к изображению
+                  src={`${apiUrl}/${event.image}`}
                   alt={event.title}
                   sx={{ objectFit: 'cover' }}
                 />
@@ -51,7 +52,7 @@ const MainPage = () => {
                     Title: {event.title}
                   </Typography>
                   <Typography variant="h6" component="div">
-                    By: {event.user.username}
+                    By: <Link to={`/news/user/${event.user._id}`}>{event.user.username}</Link>
                   </Typography>
                 </CardContent>
               </Card>

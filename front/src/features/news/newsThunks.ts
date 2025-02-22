@@ -28,3 +28,11 @@ export const fetchNews = createAsyncThunk<News[], void>(
     return response.data || [];
   },
 );
+
+export const fetchUserNews = createAsyncThunk<News[], string>(
+  "news/fetchUserNews",
+  async (id) => {
+    const response = await axiosApi<News[]>(`/news/user/${id}`);
+    return response.data;
+  }
+);

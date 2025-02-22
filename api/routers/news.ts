@@ -8,26 +8,10 @@ const newsRouter = express.Router();
 
 newsRouter.get("/", async (req, res, next) => {
     try {
-        const news = await News.find().populate('user', 'username -_id');
+        const news = await News.find().populate('user', 'username');
         res.send(news);
     }
     catch (error) {
-        next(error);
-    }
-});
-
-newsRouter.get('/:id', async (req, res, next) => {
-    try {
-        const {id} = req.params;
-        const news = await News.findById(id);
-
-        if (!news) {
-            res.status(404).send({error: 'News not found!'});
-            return;
-        }
-
-        res.send(news);
-    } catch (error) {
         next(error);
     }
 });
@@ -43,6 +27,22 @@ newsRouter.get('/user/:id', async (req, res, next) => {
         }
 
         res.send(userNews);
+    } catch (error) {
+        next(error);
+    }
+});
+
+newsRouter.get('/:id', async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const news = await News.findById(id);
+
+        if (!news) {
+            res.status(404).send({error: 'News not found!'});
+            return;
+        }
+
+        res.send(news);
     } catch (error) {
         next(error);
     }
