@@ -32,6 +32,22 @@ newsRouter.get('/:id', async (req, res, next) => {
     }
 });
 
+newsRouter.get('/user/:id', async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const userNews = await News.find({user: id}).populate('user', 'username -_id');
+
+        if (!userNews) {
+            res.status(404).send({error: 'News not found!'});
+            return;
+        }
+
+        res.send(userNews);
+    } catch (error) {
+        next(error);
+    }
+});
+
 newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res, next) => {
     const reqWithUser = req as RequestWithUser;
 
