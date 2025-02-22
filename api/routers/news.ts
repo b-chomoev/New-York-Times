@@ -4,9 +4,9 @@ import auth, {RequestWithUser} from "../middleware/auth";
 import permit from "../middleware/permit";
 import News from "../models/News";
 
-const NewsRouter = express.Router();
+const newsRouter = express.Router();
 
-NewsRouter.get("/", async (req, res, next) => {
+newsRouter.get("/", async (req, res, next) => {
     try {
         const news = await News.find();
 
@@ -17,13 +17,13 @@ NewsRouter.get("/", async (req, res, next) => {
     }
 });
 
-NewsRouter.get('/:id', async (req, res, next) => {
+newsRouter.get('/:id', async (req, res, next) => {
     try {
         const {id} = req.params;
         const news = await News.findById(id);
 
         if (!news) {
-            res.status(404).send({error: 'photo not found!'});
+            res.status(404).send({error: 'News not found!'});
             return;
         }
 
@@ -33,7 +33,7 @@ NewsRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-NewsRouter.post("/", imagesUpload.single('image'), auth, async (req, res) => {
+newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res) => {
     try {
         const expressReq = req as RequestWithUser;
         const user = expressReq.user;
@@ -60,7 +60,7 @@ NewsRouter.post("/", imagesUpload.single('image'), auth, async (req, res) => {
 });
 
 
-NewsRouter.delete("/:id", auth, permit('admin'), async (req, res, next) => {
+newsRouter.delete("/:id", auth, permit('admin'), async (req, res, next) => {
     try {
         const {id} = req.params;
 
@@ -77,4 +77,4 @@ NewsRouter.delete("/:id", auth, permit('admin'), async (req, res, next) => {
     }
 });
 
-export default NewsRouter;
+export default newsRouter;

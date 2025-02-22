@@ -3,6 +3,7 @@ import { usersReducer } from '../features/users/usersSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
+import { createNewsReducer } from '../features/news/newsSlice';
 
 const userPersistConfig = {
   key: 'store:users',
@@ -12,6 +13,7 @@ const userPersistConfig = {
 
 const rootReducer = combineReducers({
   users: persistReducer(userPersistConfig, usersReducer),
+  news: createNewsReducer,
 })
 
 export const store = configureStore({

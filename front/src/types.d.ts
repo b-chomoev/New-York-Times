@@ -17,6 +17,20 @@ export interface User {
   role: string;
 }
 
+export interface News {
+  _id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  user: User;
+}
+
+export interface NewsMutation {
+  title: string;
+  description: string;
+  image: File | null;
+}
+
 export interface RegisterResponse {
   user: User;
   message: string;

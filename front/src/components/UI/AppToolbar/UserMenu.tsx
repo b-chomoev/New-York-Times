@@ -7,45 +7,47 @@ import { logout } from '../../../features/users/usersThunks';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-    user: User;
+  user: User;
 }
 
 const UserMenu: React.FC<Props> = ({user}) => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const userAdmin = useAppSelector(selectUser);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const userAdmin = useAppSelector(selectUser);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleLogOut = () => {
-        dispatch(logout());
-        dispatch(unsetUser());
-    };
+  const handleLogOut = () => {
+    dispatch(logout());
+    dispatch(unsetUser());
+  };
 
-    return (
-        <>
-            <Button color="inherit" onClick={handleClick}>
-                Hello, {user.username}
-            </Button>
-            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                {userAdmin && userAdmin.role === 'admin' && <MenuItem onClick={() => {
-                    navigate('/admin');
-                    setAnchorEl(null);
-                }}
-                >
-                    Admin
-                </MenuItem>}
-                <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
-            </Menu>
-        </>
-    );
+  return (
+    <>
+      <Button color="inherit" onClick={handleClick}>
+        Hello, {user.username}
+      </Button>
+      <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+        {userAdmin && userAdmin.role === 'admin' && <MenuItem onClick={() => {
+          navigate('/admin');
+          setAnchorEl(null);
+        }}
+        >
+          Admin
+        </MenuItem>}
+        <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
+        <MenuItem onClick={() => navigate('/new-news')}>Add News</MenuItem>
+        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+      </Menu>
+    </>
+  );
 };
 
 export default UserMenu;
