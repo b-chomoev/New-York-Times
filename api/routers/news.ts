@@ -8,8 +8,7 @@ const newsRouter = express.Router();
 
 newsRouter.get("/", async (req, res, next) => {
     try {
-        const news = await News.find();
-
+        const news = await News.find().populate('user', 'username -_id');
         res.send(news);
     }
     catch (error) {
@@ -33,20 +32,15 @@ newsRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res) => {
+newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res, next) => {
+    const reqWithUser = req as RequestWithUser;
+
     try {
-        const expressReq = req as RequestWithUser;
-        const user = expressReq.user;
-
-        if (!user) {
-            res.status(401).send({error: 'User not found!'});
-            return;
-        }
-
         const newNews = {
             image: req.file ? 'images' + req.file.filename : null,
             title: req.body.title,
-            email: user._id,
+            description: req.body.description,
+            user: reqWithUser.user._id,
         }
 
         const news = new News(newNews);
@@ -54,8 +48,7 @@ newsRouter.post("/", imagesUpload.single('image'), auth, async (req, res) => {
 
         res.send(news);
     } catch (error) {
-        console.error(error);
-        res.status(500).send({message: "Something went wrong"});
+        next(error);
     }
 });
 

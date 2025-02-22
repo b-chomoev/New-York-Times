@@ -22,10 +22,14 @@ const NewsForm = () => {
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
 
-    dispatch(createNews({ ...form}));
-    setForm(initialState);
-    navigate('/');
-    toast.success('News created successfully');
+    try {
+      dispatch(createNews({ ...form}));
+      setForm(initialState);
+      navigate('/');
+      toast.success('News created successfully');
+    } catch (error) {
+      toast.error('Error creating news');
+    }
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './features/users/LoginPage';
 import RegisterPage from './features/users/RegisterPage';
 import NewsForm from './features/news/NewsForm/NewsForm';
+import MainPage from './containers/MainPage/MainPage';
 
 const App = () => {
 
@@ -17,7 +18,7 @@ const App = () => {
       <main>
         <Container maxWidth="xl">
           <Routes>
-            <Route path="/" element={(<h1>Main page</h1>)} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/new-news" element={<NewsForm />} />
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
