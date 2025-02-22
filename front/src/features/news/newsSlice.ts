@@ -21,7 +21,6 @@ const initialState: ICocktail = {
 
 export const selectNews = (state: RootState) => state.news.news;
 export const selectUserNews = (state: RootState) => state.news.userNews;
-export const selectOneNews = (state: RootState) => state.news.oneNews;
 export const selectNewsFetchLoading = (state: RootState) => state.news.fetchLoading;
 export const selectNewsCreateLoading = (state: RootState) => state.news.createLoading;
 

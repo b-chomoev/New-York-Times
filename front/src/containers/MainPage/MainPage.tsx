@@ -3,9 +3,19 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useEffect, useState } from 'react';
-import { Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from '@mui/material';
 import { apiUrl } from '../../globalConstants';
-import { selectNews } from '../../features/news/newsSlice';
+import { selectNews, selectNewsFetchLoading } from '../../features/news/newsSlice';
 import { fetchNews } from '../../features/news/newsThunks';
 import { News } from '../../types';
 import { Link } from 'react-router-dom';
@@ -13,6 +23,8 @@ import { Link } from 'react-router-dom';
 const MainPage = () => {
   const news = useAppSelector(selectNews);
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(selectNewsFetchLoading);
+
   const [open, setOpen] = useState(false);
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
 
@@ -36,29 +48,36 @@ const MainPage = () => {
         <Typography variant="h4" gutterBottom>
           News
         </Typography>
-        <Grid container spacing={3}>
-          {news.map((event) => (
-            <Grid key={event._id} component='div'>
-              <Card sx={{ maxWidth: 345, cursor: 'pointer' }} onClick={() => modalOpen(event)}>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  src={`${apiUrl}/${event.image}`}
-                  alt={event.title}
-                  sx={{ objectFit: 'cover' }}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    Title: {event.title}
-                  </Typography>
-                  <Typography variant="h6" component="div">
-                    By: <Link to={`/news/user/${event.user._id}`}>{event.user.username}</Link>
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+
+        {loading ? (
+          <Grid container justifyContent="center" sx={{ mt: 4 }}>
+            <CircularProgress />
+          </Grid>
+        ) : (
+          <Grid container spacing={3}>
+            {news.map((event) => (
+              <Grid key={event._id} component='div'>
+                <Card sx={{ maxWidth: 345, cursor: 'pointer' }} onClick={() => modalOpen(event)}>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    src={`${apiUrl}/${event.image}`}
+                    alt={event.title}
+                    sx={{ objectFit: 'cover' }}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" component="div">
+                      Title: {event.title}
+                    </Typography>
+                    <Typography variant="h6" component="div">
+                      By: <Link to={`/news/user/${event.user._id}`}>{event.user.username}</Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Container>
 
       <Dialog
