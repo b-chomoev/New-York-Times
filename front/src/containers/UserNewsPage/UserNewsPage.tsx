@@ -11,6 +11,7 @@ const UserNewsPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const userNews = useAppSelector(selectUserNews);
+  const name = userNews[0]?.user?.username;
 
   useEffect(() => {
     if (id) {
@@ -21,7 +22,7 @@ const UserNewsPage = () => {
   return (
     <>
       <Container>
-        <Typography variant="h4" gutterBottom>User's Portal</Typography>
+        <Typography variant="h4" gutterBottom>{name}'s Portal</Typography>
         <Grid container spacing={3}>
           {userNews.map((newsItem) => (
             <Grid key={newsItem._id} >

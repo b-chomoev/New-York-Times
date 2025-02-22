@@ -20,7 +20,7 @@ const AppToolbar = () => {
       <AppBar position="sticky" sx={{mb: 2}}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-            <Link to="/">CompStore</Link>
+            <Link to="/">New York Times</Link>
           </Typography>
 
           {user ?

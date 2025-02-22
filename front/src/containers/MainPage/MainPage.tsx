@@ -34,7 +34,7 @@ const MainPage = () => {
     <>
       <Container>
         <Typography variant="h4" gutterBottom>
-          Cocktails
+          News
         </Typography>
         <Grid container spacing={3}>
           {news.map((event) => (
